@@ -1,3 +1,5 @@
+@vite('resources/css/app.css')
+
 <!-- resources/views/products/index.blade.php -->
 <h1>Catálogo de Productos</h1>
 
