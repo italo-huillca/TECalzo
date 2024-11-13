@@ -45,4 +45,16 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Producto eliminado del carrito');
     }
+    public function update(Request $request, $id)
+    {
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] = $request->quantity;
+            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'Cantidad actualizada en el carrito');
+        }
+
+        return redirect()->back()->with('error', 'El producto no se encuentra en el carrito');
+    }
 }
