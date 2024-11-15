@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Models\Product;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,22 +26,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/checkout', [OrderController::class, 'checkoutForm'])->name('orders.checkoutForm');
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');    
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard'); 
 });
 
-require __DIR__.'/auth.php';
 
-// Rutas de administración (requieren middleware de autenticación y rol de administrador)
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.dashboard');
     });
-    // Otras rutas de administración...
 });
 
-// Rutas para usuarios autenticados (ejemplo de dashboard)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard'); // Agrega el nombre aquí
-    // Rutas adicionales para usuarios...
-});
+
+require __DIR__.'/auth.php';
