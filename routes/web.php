@@ -7,6 +7,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Models\Product;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\ProductSearchController;
+
+Route::get('/products/search', [ProductSearchController::class, 'index'])->name('products.search');
 
 Route::get('/', function () {
     return view('welcome');
