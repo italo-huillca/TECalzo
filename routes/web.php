@@ -17,6 +17,12 @@ Route::get('/', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
+// Historial (Ejemplo, debes implementar este controlador)
+Route::get('/orders/history', function () {
+    // Retorna la vista del historial
+    return view('orders.history');
+})->name('orders.history');
+
 // Rutas del carrito de compras
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
