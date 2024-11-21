@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Catálogo de Productos')
+
+@section('content')
+
 @vite('resources/css/app.css')
 
 <!-- resources/views/products/index.blade.php -->
@@ -31,3 +37,4 @@
 </div>
 
 {{ $products->links() }}
+@endsection

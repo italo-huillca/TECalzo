@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Carrito de Compras')
+
+@section('content')
+
 @vite('resources/css/app.css')
 <h1>Carrito de Compras</h1>
 
@@ -51,3 +57,4 @@
 @endif
 
 <a href="{{ route('products.index') }}">Volver al catálogo</a>
+@endsection
