@@ -36,7 +36,15 @@
         </tbody>
     </table>
     <div>
-        <p><strong>Total:</strong> {{ array_reduce(session('cart'), function($total, $item) { return $total + $item['price'] * $item['quantity']; }, 0) }}</p>
+        <p><strong>Total:</strong> 
+        {{ array_reduce(session('cart'), function($total, $item) { return $total + $item['price'] * $item['quantity']; }, 0) }}</p>
+    </div>
+
+    <!-- Botón para continuar con la orden -->
+    <div class="mt-4">
+        <a href="{{ route('orders.checkoutForm') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            Continuar con la Orden
+        </a>
     </div>
 @else
     <p>El carrito está vacío.</p>
