@@ -20,5 +20,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'admin',
         ]);
+        User::create([
+            'name' => 'User',
+            'email' => 'usuario@tecalzo.com',
+            'password' => Hash::make('password'),
+            'role' => 'user',
+        ]);
     }
 }

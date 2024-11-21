@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Category;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -20,8 +21,8 @@ class ProductFactory extends Factory
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 10, 100),
-            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']),
-            'category_id' => \App\Models\Category::inRandomOrder()->first()->id,
+            'size' => $this->faker->numberBetween(35, 46), // Tallas numéricas entre 35 y 46
+            'category_id' => Category::factory(), // Relación con una categoría generada
             'stock' => $this->faker->numberBetween(1, 50),
         ];
     }
