@@ -4,37 +4,46 @@
 
 @section('content')
 
-@vite('resources/css/app.css')
-
-<!-- resources/views/products/index.blade.php -->
-<h1>Catálogo de Productos</h1>
+<h1 class="text-2xl font-bold mb-4">Catálogo de Productos</h1>
 
 <!-- Filtros básicos -->
-<form method="GET" action="{{ route('products.index') }}">
-    <select name="category">
-        <option value="">Todas las categorías</option>
-        <!-- Opciones de categoría aquí -->
-    </select>
-    <input type="number" name="min_price" placeholder="Precio mínimo">
-    <input type="number" name="max_price" placeholder="Precio máximo">
-    <button type="submit">Filtrar</button>
+<form method="GET" action="{{ route('products.index') }}" class="mb-6">
+    <div class="flex gap-4">
+        <select name="category" class="border border-gray-300 rounded px-4 py-2">
+            <option value="">Todas las categorías</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+        <input type="number" name="min_price" placeholder="Precio mínimo" value="{{ request('min_price') }}" class="border border-gray-300 rounded px-4 py-2">
+        <input type="number" name="max_price" placeholder="Precio máximo" value="{{ request('max_price') }}" class="border border-gray-300 rounded px-4 py-2">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            Filtrar
+        </button>
+    </div>
 </form>
 
 <!-- Lista de productos -->
-<div class="products">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     @foreach($products as $product)
-        <div class="product">
-            <h2>{{ $product->name }}</h2>
-            <p>{{ $product->description }}</p>
-            <p>Precio: {{ $product->price }}</p>
-            <a href="{{ route('products.show', $product->id) }}">Ver detalles</a>
-            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+        <div class="bg-white shadow-md rounded-lg p-4">
+            <h2 class="text-lg font-bold">{{ $product->name }}</h2>
+            <p class="text-gray-700">{{ $product->description }}</p>
+            <p class="text-gray-800 font-semibold">Precio: {{ $product->price }}</p>
+            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-4">
                 @csrf
-                <button type="submit">Añadir al carrito</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Añadir al Carrito
+                </button>
             </form>
         </div>
     @endforeach
 </div>
 
-{{ $products->links() }}
+<!-- Paginación -->
+<div class="mt-6">
+    {{ $products->links() }}
+</div>
 @endsection

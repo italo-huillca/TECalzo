@@ -22,7 +22,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 10, 100),
             'size' => $this->faker->numberBetween(35, 46), // Tallas numéricas entre 35 y 46
-            'category_id' => Category::factory(), // Relación con una categoría generada
+            'category_id' => Category::inRandomOrder()->first()->id,
             'stock' => $this->faker->numberBetween(1, 50),
         ];
     }

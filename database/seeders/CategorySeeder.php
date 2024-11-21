@@ -13,6 +13,8 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(10)->create();
+        Category::updateOrCreate(['name' => 'Hombre'], ['description' => 'Ropa y accesorios para hombre']);
+        Category::updateOrCreate(['name' => 'Mujer'], ['description' => 'Ropa y accesorios para mujer']);
+        Category::updateOrCreate(['name' => 'Niño'], ['description' => 'Ropa y accesorios para niños']);
     }
 }
