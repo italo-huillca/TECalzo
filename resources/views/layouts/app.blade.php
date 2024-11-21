@@ -34,7 +34,7 @@
                 </a>
 
                 <!-- Perfil -->
-                <a href="{{ route('dashboard') }}" class="text-gray-600 hover:text-blue-500">
+                <a href="{{ route('profile.edit') }}" class="text-gray-600 hover:text-blue-500">
                     Perfil
                 </a>
             </div>

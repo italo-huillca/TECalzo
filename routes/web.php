@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Models\Product;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\ProductSearchController;
+use App\Http\Controllers\OrderHistoryController;
 
 Route::get('/products/search', [ProductSearchController::class, 'index'])->name('products.search');
 
@@ -17,11 +18,11 @@ Route::get('/', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
-// Historial (Ejemplo, debes implementar este controlador)
-Route::get('/orders/history', function () {
-    // Retorna la vista del historial
-    return view('orders.history');
-})->name('orders.history');
+// Historial 
+
+Route::get('/orders/history', [OrderHistoryController::class, 'index'])
+    ->name('orders.history')
+    ->middleware('auth');
 
 // Rutas del carrito de compras
 
