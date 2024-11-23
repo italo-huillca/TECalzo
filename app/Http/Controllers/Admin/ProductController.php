@@ -12,7 +12,7 @@ class ProductController extends Controller
     // Muestra todos los productos
     public function index()
     {
-        $products = Product::all(); 
+        $products = Product::all();
         return view('admin.products.index', compact('products'));
     }
 
@@ -34,7 +34,7 @@ class ProductController extends Controller
             'size' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'stock' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,webp,png,jpg,gif,svg|max:2048',
         ]);
 
         $product = new Product();

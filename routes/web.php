@@ -10,11 +10,10 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\ProductSearchController;
 use App\Http\Controllers\OrderHistoryController;
 
+Route::get('/', [ProductController::class, 'home'])->name('home');
+
 Route::get('/products/search', [ProductSearchController::class, 'index'])->name('products.search');
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
