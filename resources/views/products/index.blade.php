@@ -29,9 +29,15 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     @foreach($products as $product)
         <div class="bg-white shadow-md rounded-lg p-4">
+            <!-- Mostrar la imagen del producto -->
+            @if($product->image)
+                <img src="{{ asset('images/products/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover rounded-lg mb-4">
+            @else
+                <img src="{{ asset('images/placeholder.png') }}" alt="Imagen no disponible" class="w-full h-48 object-cover rounded-lg mb-4">
+            @endif
             <h2 class="text-lg font-bold">{{ $product->name }}</h2>
             <p class="text-gray-700">{{ $product->description }}</p>
-            <p class="text-gray-800 font-semibold">Precio: {{ $product->price }}</p>
+            <p class="text-gray-800 font-semibold">Precio: ${{ $product->price }}</p>
             <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-4">
                 @csrf
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -41,6 +47,7 @@
         </div>
     @endforeach
 </div>
+
 
 <!-- Paginación -->
 <div class="mt-6">

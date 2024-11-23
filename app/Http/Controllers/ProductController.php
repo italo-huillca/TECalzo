@@ -27,7 +27,7 @@ class ProductController extends Controller
     // Obtener las categorías
     $categories = Category::all();
 
-    $products = $query->paginate(10);
+    $products = $query->paginate(9);
 
     return view('products.index', compact('products', 'categories'));
 }
