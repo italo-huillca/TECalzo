@@ -1,10 +1,16 @@
 <!-- Contenido principal -->
 <main class="container mx-auto p-4">
-    <h2 class="text-center mb-4">Productos Destacados</h2>
+    <!-- Título del carrusel -->
+    <h2 class="text-4xl font-extrabold text-blue-600 text-center mb-8">
+        Productos Destacados
+    </h2>
+
+    <!-- Verificación de productos destacados -->
     @if($randomProducts->isEmpty())
-        <p class="text-center">No hay productos destacados en este momento.</p>
+        <p class="text-center text-gray-600">No hay productos destacados en este momento.</p>
     @else
         <div class="relative overflow-hidden">
+            <!-- Contenedor del carrusel -->
             <div class="flex transition-transform ease-in-out duration-500" id="carouselInner">
                 @foreach($randomProducts as $key => $product)
                     <div class="w-full flex-shrink-0 flex justify-center">
@@ -20,52 +26,57 @@
                     </div>
                 @endforeach
             </div>
+
             <!-- Botones de navegación -->
-            <button id="prevBtn" class="absolute top-1/2 left-2 -translate-y-1/2 bg-gray-700 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-gray-500">
+            <button id="prevBtn" 
+                    class="absolute top-1/2 left-2 -translate-y-1/2 bg-gray-700 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-gray-500">
                 &lt;
             </button>
-            <button id="nextBtn" class="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-700 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-gray-500">
+            <button id="nextBtn" 
+                    class="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-700 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-gray-500">
                 &gt;
             </button>
         </div>
     @endif
 </main>
 
-
+<!-- Script del carrusel -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const carouselInner = document.getElementById('carouselInner');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    let currentIndex = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+        const carouselInner = document.getElementById('carouselInner');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
 
-    const slides = document.querySelectorAll('#carouselInner > div'); // Selecciona cada slide
-    const slideCount = slides.length;
+        // Obtener las slides y su conteo
+        const slides = document.querySelectorAll('#carouselInner > div');
+        const slideCount = slides.length;
 
-    const updateCarousel = () => {
-        // Asegúrate de tomar el ancho del contenedor principal
-        const container = document.querySelector('main.container');
-        const containerWidth = container.offsetWidth;
+        const updateCarousel = () => {
+            // Ancho del contenedor visible del carrusel
+            const container = document.querySelector('.relative.overflow-hidden');
+            const containerWidth = container.offsetWidth;
 
-        // Aplica el ancho al desplazamiento
-        carouselInner.style.transform = `translateX(-${currentIndex * containerWidth}px)`;
-    };
+            // Desplazar el carrusel según el índice actual
+            carouselInner.style.transform = `translateX(-${currentIndex * containerWidth}px)`;
+        };
 
-    prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex > 0) ? currentIndex - 1 : slideCount - 1;
+        // Navegación: botón anterior
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : slideCount - 1;
+            updateCarousel();
+        });
+
+        // Navegación: botón siguiente
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex < slideCount - 1) ? currentIndex + 1 : 0;
+            updateCarousel();
+        });
+
+        // Ajustar el carrusel al redimensionar la ventana
+        window.addEventListener('resize', updateCarousel);
+
+        // Inicializar el carrusel
         updateCarousel();
     });
-
-    nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex < slideCount - 1) ? currentIndex + 1 : 0;
-        updateCarousel();
-    });
-
-    window.addEventListener('resize', updateCarousel);
-
-    // Inicializa el carrusel al cargar
-    updateCarousel();
-});
-
-
 </script>

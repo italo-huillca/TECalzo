@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'TECalzo')</title>
     @vite('resources/css/app.css') <!-- TailwindCSS -->
-
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=account_circle,shopping_cart" />
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -28,37 +30,34 @@
 
                 <!-- Carrito -->
                 <a href="{{ route('cart.index') }}" class="relative group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 group-hover:text-blue-500"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-4-8M7 13l4 8m6-8l4 8M7 13h10" />
-                    </svg>
+                    <span class="material-symbols-outlined text-gray-600 text-xl">
+                        shopping_cart
+                    </span>
                     <span
                         class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                         {{ session()->get('cart') ? count(session('cart')) : 0 }}
                     </span>
                 </a>
+
                 <!-- Botón Historial (solo para usuarios autenticados) -->
                 @if (auth()->check())
                     <a href="{{ route('orders.history') }}" class="text-gray-600 hover:text-blue-500">
                         Historial
                     </a>
                 @endif
-                <!-- Verificar si el usuario está autenticado -->
-                @if (auth()->check())
-                    <!-- Desplegable de Perfil -->
-                    <div class="relative">
-                        <!-- Botón de perfil circular -->
-                        <button id="profileButton"
-                            class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5.121 17.804A9 9 0 1116.88 6.196m-2.12 2.121a3 3 0 11-4.243 4.243m5.657 2.828a6 6 0 10-8.486 0" />
-                            </svg>
-                        </button>
 
-                        <!-- Menú desplegable -->
+                <!-- Perfil/Login -->
+                <div class="relative">
+                    <!-- Botón de perfil/login -->
+                    <button id="profileButton"
+                        class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <span class="material-symbols-outlined text-gray-600 text-xl">
+                            account_circle
+                        </span>
+                    </button>
+
+                    <!-- Menú desplegable solo para usuarios autenticados -->
+                    @if (auth()->check())
                         <div id="profileDropdown"
                             class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
                             <a href="{{ route('profile.edit') }}"
@@ -73,41 +72,34 @@
                                 </button>
                             </form>
                         </div>
-                    </div>
-                @else
-                    <!-- Mostrar SVG de login -->
-                    <a href="{{ route('login') }}"
-                        class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <img src="{{ asset('https://www.svgrepo.com/show/509153/login.svg') }}" alt="Login"
-                            class="h-6 w-6">
-                    </a>
-                @endif
+                    @else
+                        <a href="{{ route('login') }}" class="absolute inset-0 w-full h-full"></a>
+                    @endif
+                </div>
             </div>
         </div>
     </header>
-
-
-
 
     <!-- Contenido principal -->
     <main class="container mx-auto p-4">
         @yield('content')
     </main>
 </body>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const profileButton = document.getElementById('profileButton');
         const profileDropdown = document.getElementById('profileDropdown');
 
         // Toggle el menú desplegable
-        profileButton.addEventListener('click', () => {
-            profileDropdown.classList.toggle('hidden');
+        profileButton?.addEventListener('click', () => {
+            profileDropdown?.classList.toggle('hidden');
         });
 
         // Cerrar el menú si se hace clic fuera
         document.addEventListener('click', (event) => {
-            if (!profileButton.contains(event.target) && !profileDropdown.contains(event.target)) {
-                profileDropdown.classList.add('hidden');
+            if (!profileButton?.contains(event.target) && !profileDropdown?.contains(event.target)) {
+                profileDropdown?.classList.add('hidden');
             }
         });
     });
