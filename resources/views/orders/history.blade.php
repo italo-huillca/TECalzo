@@ -21,9 +21,10 @@
                     <p class="text-sm text-gray-600">
                         Estado: 
                         <span class="px-3 py-1 rounded-full text-white 
-                            {{ $order->status === 'pendiente' ? 'bg-yellow-500' : ($order->status === 'completado' ? 'bg-green-500' : 'bg-red-500') }}">
-                            {{ ucfirst($order->status) }}
-                        </span>
+                        {{ $order->status === 'pending' ? 'bg-yellow-500' : ($order->status === 'completed' ? 'bg-green-500' : 'bg-red-500') }}">
+                        {{ $order->status === 'pending' ? 'Pendiente' : ($order->status === 'completed' ? 'Completado' : 'Cancelado') }}
+                    </span>
+                    
                     </p>
                     <p class="text-sm text-gray-600">Total: ${{ number_format($order->total, 2) }}</p>
                     <p class="text-sm text-gray-600">Dirección de envío: {{ $order->shipping_address }}</p>

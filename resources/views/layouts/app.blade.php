@@ -8,7 +8,7 @@
     @vite('resources/css/app.css') <!-- TailwindCSS -->
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=account_circle,shopping_cart" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=account_circle,shopping_cart" />
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -16,8 +16,10 @@
     <header class="bg-white shadow-md p-4">
         <div class="container mx-auto flex justify-between items-center">
             <!-- Logo -->
-            <a href="{{ url('/') }}" class="text-xl font-bold text-blue-500">TECalzo</a>
-
+            <a href="{{ url('/') }}" class="flex items-center space-x-2">
+                <img src="{{ asset('favicon.ico') }}" alt="TECalzo Logo" class="w-11 h-11">
+                <span class="text-xl font-bold text-blue-500">TECalzo</span>
+            </a>
             <!-- Barra de búsqueda -->
             @include('partials.search-bar')
 
@@ -64,10 +66,19 @@
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 Ver Perfil
                             </a>
-                            <form method="POST" action="{{ route('logout') }}">
+
+                            <!-- Botón especial para admin -->
+                            @if (auth()->user()->role === 'admin')
+                                <a href="{{ url('/admin/products') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    Panel de Administración
+                                </a>
+                            @endif
+
+                            <!-- Botón para cerrar sesión -->
+                            <form method="POST" action="{{ route('logout') }}" class="w-full">
                                 @csrf
                                 <button type="submit"
-                                    class="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    class="block w-full px-4 py-2 text-gray-700 text-left hover:bg-gray-100">
                                     Cerrar Sesión
                                 </button>
                             </form>
@@ -75,7 +86,9 @@
                     @else
                         <a href="{{ route('login') }}" class="absolute inset-0 w-full h-full"></a>
                     @endif
+
                 </div>
+
             </div>
         </div>
     </header>

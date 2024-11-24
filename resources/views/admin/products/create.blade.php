@@ -1,40 +1,40 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Crear Producto</h1>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Crear Producto</h1>
 
-    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-lg space-y-6">
         @csrf
 
         <!-- Campo Nombre -->
-        <div class="form-group">
-            <label for="name">Nombre</label>
-            <input type="text" name="name" id="name" class="form-control" required>
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
+            <input type="text" name="name" id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <!-- Campo Descripción -->
-        <div class="form-group">
-            <label for="description">Descripción</label>
-            <textarea name="description" id="description" class="form-control"></textarea>
+        <div>
+            <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
+            <textarea name="description" id="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
         </div>
 
         <!-- Campo Precio -->
-        <div class="form-group">
-            <label for="price">Precio</label>
-            <input type="number" step="0.01" name="price" id="price" class="form-control" required>
+        <div>
+            <label for="price" class="block text-sm font-medium text-gray-700">Precio</label>
+            <input type="number" step="0.01" name="price" id="price" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <!-- Campo Talla de Calzado -->
-        <div class="form-group">
-            <label for="size">Tamaño (Talla Calzado)</label>
-            <input type="text" name="size" id="size" class="form-control" placeholder="Ej. 39, 40, 41" required>
+        <div>
+            <label for="size" class="block text-sm font-medium text-gray-700">Tamaño (Talla Calzado)</label>
+            <input type="text" name="size" id="size" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Ej. 39, 40, 41" required>
         </div>
 
         <!-- Campo Categoría -->
-        <div class="form-group">
-            <label for="category_id">Categoría</label>
-            <select name="category_id" id="category_id" class="form-control" required>
-                <!-- Asume que hay una lista de categorías disponibles -->
+        <div>
+            <label for="category_id" class="block text-sm font-medium text-gray-700">Categoría</label>
+            <select name="category_id" id="category_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
@@ -42,17 +42,23 @@
         </div>
 
         <!-- Campo Stock -->
-        <div class="form-group">
-            <label for="stock">Stock</label>
-            <input type="number" name="stock" id="stock" class="form-control" required>
+        <div>
+            <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+            <input type="number" name="stock" id="stock" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <!-- Campo Imagen -->
-        <div class="form-group">
-            <label for="image">Imagen</label>
-            <input type="file" name="image" id="image" class="form-control">
+        <div>
+            <label for="image" class="block text-sm font-medium text-gray-700">Imagen</label>
+            <input type="file" name="image" id="image" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
         </div>
 
-        <button type="submit" class="btn btn-success">Crear Producto</button>
+        <!-- Botón Crear Producto -->
+        <div>
+            <button type="submit" class="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                Crear Producto
+            </button>
+        </div>
     </form>
+</div>
 @endsection

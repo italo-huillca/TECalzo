@@ -78,4 +78,5 @@ class OrderController extends Controller
 
         return view('orders.checkoutForm');
     }
+    
 }

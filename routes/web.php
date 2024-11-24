@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\ProductSearchController;
 use App\Http\Controllers\OrderHistoryController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 Route::get('/', [ProductController::class, 'home'])->name('home');
 
@@ -46,12 +47,22 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.dashboard'); 
+    })->name('admin.dashboard');
+
     Route::get('/admin/products', [AdminProductController::class, 'index'])->name('admin.products.index'); // Ver todos los productos
     Route::get('/admin/products/create', [AdminProductController::class, 'create'])->name('admin.products.create'); // Crear producto
     Route::post('/admin/products', [AdminProductController::class, 'store'])->name('admin.products.store'); // Guardar nuevo producto
     Route::get('/admin/products/{id}/edit', [AdminProductController::class, 'edit'])->name('admin.products.edit'); // Editar producto
     Route::put('/admin/products/{id}', [AdminProductController::class, 'update'])->name('admin.products.update'); // Actualizar producto
     Route::delete('/admin/products/{id}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy'); // Eliminar producto
+
+    Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/admin/orders/{id}/edit', [AdminOrderController::class, 'edit'])->name('admin.orders.edit');
+    Route::put('/admin/orders/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+    Route::get('/admin/orders/{id}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
+
 });
 
 require __DIR__ . '/auth.php';
