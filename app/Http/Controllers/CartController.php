@@ -17,7 +17,7 @@ class CartController extends Controller
     {
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
-
+    
         // Añadir el producto al carrito o incrementar la cantidad si ya existe
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
@@ -27,9 +27,10 @@ class CartController extends Controller
                 "price" => $product->price,
                 "quantity" => 1,
                 "size" => $product->size,
+                "image" => $product->image ?? 'default.png', // Asigna la imagen o un valor por defecto
             ];
         }
-
+    
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Producto añadido al carrito');
     }

@@ -3,31 +3,52 @@
 @section('title', 'Historial de Pedidos')
 
 @section('content')
-    <h1 class="text-2xl font-bold mb-4">Historial de Pedidos</h1>
+<div class="container mx-auto p-4">
+    <!-- Título -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Historial de Pedidos</h1>
 
     @if($orders->isEmpty())
-        <p class="text-gray-600">No tienes pedidos realizados.</p>
+        <!-- Mensaje si no hay pedidos -->
+        <p class="text-center text-gray-600 text-lg">No tienes pedidos realizados.</p>
     @else
-        <ul class="space-y-6">
+        <!-- Lista de pedidos -->
+        <div class="space-y-6">
             @foreach($orders as $order)
-                <li class="border rounded-lg p-4 bg-white">
-                    <h2 class="text-lg font-bold mb-2">Pedido #{{ $order->id }}</h2>
+                <div class="border rounded-lg p-6 bg-white shadow-md">
+                    <!-- Encabezado del pedido -->
+                    <h2 class="text-xl font-bold text-gray-800">Pedido #{{ $order->id }}</h2>
                     <p class="text-sm text-gray-600">Fecha: {{ $order->order_date }}</p>
-                    <p class="text-sm text-gray-600">Estado: {{ ucfirst($order->status) }}</p>
+                    <p class="text-sm text-gray-600">
+                        Estado: 
+                        <span class="px-3 py-1 rounded-full text-white 
+                            {{ $order->status === 'pendiente' ? 'bg-yellow-500' : ($order->status === 'completado' ? 'bg-green-500' : 'bg-red-500') }}">
+                            {{ ucfirst($order->status) }}
+                        </span>
+                    </p>
                     <p class="text-sm text-gray-600">Total: ${{ number_format($order->total, 2) }}</p>
                     <p class="text-sm text-gray-600">Dirección de envío: {{ $order->shipping_address }}</p>
 
-                    <!-- Detalles del pedido -->
+                    <!-- Productos del pedido -->
                     <h3 class="text-md font-semibold mt-4">Productos:</h3>
-                    <ul class="list-disc pl-5">
+                    <ul class="list-disc pl-5 text-sm text-gray-700">
                         @foreach($order->orderDetails as $detail)
                             <li>
-                                {{ $detail->product->name }} ({{ $detail->quantity }} x ${{ number_format($detail->unit_price, 2) }})
+                                {{ $detail->product->name }} 
+                                ({{ $detail->quantity }} x ${{ number_format($detail->unit_price, 2) }})
                             </li>
                         @endforeach
                     </ul>
-                </li>
+
+                    <!-- Botón para ver detalles -->
+                    <div class="mt-4">
+                        <a href="{{ route('orders.show', $order->id) }}" 
+                           class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            Ver Detalle
+                        </a>
+                    </div>
+                </div>
             @endforeach
-        </ul>
+        </div>
     @endif
+</div>
 @endsection
