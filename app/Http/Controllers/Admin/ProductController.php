@@ -79,28 +79,24 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
+    
         $product = Product::findOrFail($id);
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->size = $request->size;
-        $product->category_id = $request->category_id;
-        $product->stock = $request->stock;
-
-        // Subir imagen si se proporciona
+        $product->fill($request->except('image'));
+    
+        // Procesar imagen si existe
         if ($request->hasFile('image')) {
             // Eliminar imagen anterior si existe
             if ($product->image && file_exists(public_path('images/products/' . $product->image))) {
                 unlink(public_path('images/products/' . $product->image));
             }
+    
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images/products'), $imageName);
             $product->image = $imageName;
         }
-
+    
         $product->save();
-
+    
         return redirect()->route('admin.products.index')->with('success', 'Producto actualizado con éxito');
     }
 

@@ -24,7 +24,7 @@
 
         <div class="form-group">
             <label for="size">Tamaño (Talla Calzado)</label>
-            <input type="text" name="size" id="size" class="form-control" value="{{ $product->size }}" placeholder="Ej. 39, 40, 41" required>
+            <input type="text" name="size" id="size" class="form-control" value="{{ $product->size }}" required>
         </div>
 
         <div class="form-group">
@@ -45,6 +45,9 @@
 
         <div class="form-group">
             <label for="image">Imagen</label>
+            @if ($product->image)
+                <img src="{{ asset('images/products/' . $product->image) }}" alt="Imagen actual" class="img-thumbnail mb-3" style="max-width: 200px;">
+            @endif
             <input type="file" name="image" id="image" class="form-control">
         </div>
 
